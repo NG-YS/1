@@ -1,9 +1,10 @@
 struct rational_number {
-	int n,m, sign;//n - числителя, m - знаменателя
-	uint8_t* ch,*zn;//ch - числитель, zn, знаменатель
+	int n,m, sign;//n - Г·ГЁГ±Г«ГЁГІГҐГ«Гї, m - Г§Г­Г Г¬ГҐГ­Г ГІГҐГ«Гї
+	uint8_t* ch,*zn;//ch - Г·ГЁГ±Г«ГЁГІГҐГ«Гј, zn, Г§Г­Г Г¬ГҐГ­Г ГІГҐГ«Гј
 };
 int rational();//main in file
 int print_QQ(struct rational_number Q);//serv
+struct rational_number TRANS_int_Q(int x);//serv
 struct rational_number Qcpy(struct rational_number Q);//srev
 struct rational_number read_QQ();//serv
 int free_Q(struct rational_number Q);//serv

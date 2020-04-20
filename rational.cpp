@@ -2,20 +2,20 @@
 #include "integer.h"
 #include "rational.h"
 //rational_number 
-//Q.sign==-1 при ошибке
+//Q.sign==-1 ГЇГ°ГЁ Г®ГёГЁГЎГЄГҐ
 struct rational_number read_QQ()
 {
 	int n, m; char c;
 	struct rational_number Q;
 	struct integer_number Z;
-	printf("введите n\n");
+	printf("ГўГўГҐГ¤ГЁГІГҐ n\n");
 	if (scanf("%d%c", &n, &c) == EOF) { printf("scanf error in read_QQ\n"); Q.sign = -1; return Q; }//check
-	printf("ВВедите числитель: ");
+	printf("Г‚Г‚ГҐГ¤ГЁГІГҐ Г·ГЁГ±Г«ГЁГІГҐГ«Гј: ");
 	Z = read_Z(n);
 	if (Z.sign == -1) { printf("read_Z error in read_QQ\n"); Q.sign = -1; return Q; }//check
-	printf("введите m\n");
+	printf("ГўГўГҐГ¤ГЁГІГҐ m\n");
 	if (scanf("%d%c", &m, &c) == EOF) { printf("scanf error in read_QQ\n"); Q.sign = -1; return Q; }//check
-	printf("ВВедите знаменатель: ");
+	printf("Г‚Г‚ГҐГ¤ГЁГІГҐ Г§Г­Г Г¬ГҐГ­Г ГІГҐГ«Гј: ");
 	Q.zn = read_NN(m);
 	if (Q.zn == NULL) { printf("NULL pointer in read_QQ\n"); Q.sign = -1; return Q; }//check
 	Q.m = m;
@@ -24,7 +24,25 @@ struct rational_number read_QQ()
 	Q.sign = Z.sign;
 	return Q;
 }
-//-1 в случае ошибки
+struct rational_number TRANS_int_Q(int x)
+{
+	rational_number Q;
+	Q.sign = 0;
+	Q.m = 1;
+	Q.zn = new uint8_t[2];
+	Q.zn[0] = 1;
+	Q.ch = new uint8_t[12];
+	Q.n = 0;
+	if (x == 0) { Q.n = 1; Q.ch[0] = 0; }
+	while (x)
+	{
+		Q.ch[Q.n] = x % 10;
+		Q.n++;
+		x /= 10;
+	}
+	return Q;
+}
+//-1 Гў Г±Г«ГіГ·Г ГҐ Г®ГёГЁГЎГЄГЁ
 int free_Q(struct rational_number Q)
 {
 	if (Q.ch == NULL || Q.zn == NULL) { printf("error in free_Q\n"); return -1; }//check
@@ -32,7 +50,7 @@ int free_Q(struct rational_number Q)
 	delete[]Q.zn; Q.zn = NULL;
 	return 0;
 }
-//Q.sign==-1 при ошибке
+//Q.sign==-1 ГЇГ°ГЁ Г®ГёГЁГЎГЄГҐ
 struct rational_number Qcpy(struct rational_number Q)
 {
 	struct rational_number Q1;
@@ -46,18 +64,18 @@ struct rational_number Qcpy(struct rational_number Q)
 	Q1.sign = Q.sign;
 	return Q1;
 }
-//-1 в случае ошибки
+//-1 Гў Г±Г«ГіГ·Г ГҐ Г®ГёГЁГЎГЄГЁ
 int print_QQ(struct rational_number Q)
 {
 	struct integer_number Z = TRANS_Q_Z(Q);
 	if (INT_Q_B(Q)) { print_Z(Z); return 0; }
-	printf("числитель: ");
+	printf("Г·ГЁГ±Г«ГЁГІГҐГ«Гј: ");
 	if (print_Z(Z) == -1) { printf("error in print_QQ\n"); return -1; }//check
-	printf("знаменатель: ");
+	printf("Г§Г­Г Г¬ГҐГ­Г ГІГҐГ«Гј: ");
 	if (print_NN(Q.zn, Q.m) == -1) { printf("error in print_QQ\n"); return -1; }//check
 	return 0;
 }
-//Q.sign==-1 при ошибке
+//Q.sign==-1 ГЇГ°ГЁ Г®ГёГЁГЎГЄГҐ
 rational_number RED_Q_Q(struct rational_number Q)
 {
 	uint8_t* A, * B, * t1;
@@ -77,12 +95,12 @@ rational_number RED_Q_Q(struct rational_number Q)
 	delete[] B;
 	return Q;
 }
-//-1 в случае ошибки
+//-1 Гў Г±Г«ГіГ·Г ГҐ Г®ГёГЁГЎГЄГЁ
 int INT_Q_B(struct rational_number Q)
-{//является ли число целым
+{//ГїГўГ«ГїГҐГІГ±Гї Г«ГЁ Г·ГЁГ±Г«Г® Г¶ГҐГ«Г»Г¬
 	return ((Q.zn[0] == 1) && (Q.m == 1));
 }
-//Q.sign==-1 при ошибке
+//Q.sign==-1 ГЇГ°ГЁ Г®ГёГЁГЎГЄГҐ
 rational_number TRANS_Z_Q(struct integer_number Z)
 {
 	struct rational_number Q;
@@ -94,16 +112,16 @@ rational_number TRANS_Z_Q(struct integer_number Z)
 	Q.sign = Z.sign;
 	return Q;
 }
-//Z.sign==-1 при ошибке
+//Z.sign==-1 ГЇГ°ГЁ Г®ГёГЁГЎГЄГҐ
 integer_number TRANS_Q_Z(struct rational_number Q)
 {
 	struct integer_number Z;
 	Z.length = Q.n;
 	Z.numb = Q.ch;
 	Z.sign = Q.sign;
-	return Z;//вернет число с той же памтью
+	return Z;//ГўГҐГ°Г­ГҐГІ Г·ГЁГ±Г«Г® Г± ГІГ®Г© Г¦ГҐ ГЇГ Г¬ГІГјГѕ
 }
-//Q.sign==-1 при ошибке
+//Q.sign==-1 ГЇГ°ГЁ Г®ГёГЁГЎГЄГҐ
 rational_number ADD_QQ_Q(struct rational_number Q1, struct rational_number Q2)
 {
 	struct rational_number Q;
@@ -130,16 +148,16 @@ rational_number ADD_QQ_Q(struct rational_number Q1, struct rational_number Q2)
 	Q.ch = Z.numb;
 	Q.n = Z.length;
 	Q.sign = Z.sign;
-	return Q;//вернет новую память, которая никак не зависит от исходных данных, что означает, что в Q1 и Q2 лежит неочищенная память
+	return Q;//ГўГҐГ°Г­ГҐГІ Г­Г®ГўГіГѕ ГЇГ Г¬ГїГІГј, ГЄГ®ГІГ®Г°Г Гї Г­ГЁГЄГ ГЄ Г­ГҐ Г§Г ГўГЁГ±ГЁГІ Г®ГІ ГЁГ±ГµГ®Г¤Г­Г»Гµ Г¤Г Г­Г­Г»Гµ, Г·ГІГ® Г®Г§Г­Г Г·Г ГҐГІ, Г·ГІГ® Гў Q1 ГЁ Q2 Г«ГҐГ¦ГЁГІ Г­ГҐГ®Г·ГЁГ№ГҐГ­Г­Г Гї ГЇГ Г¬ГїГІГј
 }
-//Q.sign==-1 при ошибке
+//Q.sign==-1 ГЇГ°ГЁ Г®ГёГЁГЎГЄГҐ
 rational_number SUB_QQ_Q(struct rational_number Q1, struct rational_number Q2)
 {
 	Q2.sign = (Q2.sign - 1) * (-1);
 	struct rational_number Q = ADD_QQ_Q(Q1, Q2);
 	return Q;
 }
-//Q.sign==-1 при ошибке
+//Q.sign==-1 ГЇГ°ГЁ Г®ГёГЁГЎГЄГҐ
 rational_number MUL_QQ_Q(struct rational_number Q1, struct rational_number Q2)
 {
 	struct rational_number Q;
@@ -148,7 +166,7 @@ rational_number MUL_QQ_Q(struct rational_number Q1, struct rational_number Q2)
 	Q.zn = MUL_NN_N(Q1.zn, Q2.zn, Q1.m, Q2.m, &(Q.m));
 	return Q;
 }
-//Q.sign==-1 при ошибке
+//Q.sign==-1 ГЇГ°ГЁ Г®ГёГЁГЎГЄГҐ
 rational_number DIV_QQ_Q(struct rational_number Q1, struct rational_number Q2)
 {
 	struct rational_number Q;
@@ -162,7 +180,7 @@ rational_number DIV_QQ_Q(struct rational_number Q1, struct rational_number Q2)
 int rational()
 {
 	while (1) {
-		printf("введите номер действия согласно инструкции в документации\n1) Сокращение дроби\n2) Проверка на целое, если рациональное число является целым, то «да», иначе «нет»\n3) Преобразование целого в дробное\n4) Преобразование дробного в целое (если знаменатель равен 1)\n5) Сложение дробей\n6) Вычитание дробей\n7) Умножение дробей\n8) Деление дробей (делитель отличен от нуля)\n");
+		printf("ГўГўГҐГ¤ГЁГІГҐ Г­Г®Г¬ГҐГ° Г¤ГҐГ©Г±ГІГўГЁГї Г±Г®ГЈГ«Г Г±Г­Г® ГЁГ­Г±ГІГ°ГіГЄГ¶ГЁГЁ Гў Г¤Г®ГЄГіГ¬ГҐГ­ГІГ Г¶ГЁГЁ\n1) Г‘Г®ГЄГ°Г Г№ГҐГ­ГЁГҐ Г¤Г°Г®ГЎГЁ\n2) ГЏГ°Г®ГўГҐГ°ГЄГ  Г­Г  Г¶ГҐГ«Г®ГҐ, ГҐГ±Г«ГЁ Г°Г Г¶ГЁГ®Г­Г Г«ГјГ­Г®ГҐ Г·ГЁГ±Г«Г® ГїГўГ«ГїГҐГІГ±Гї Г¶ГҐГ«Г»Г¬, ГІГ® В«Г¤Г В», ГЁГ­Г Г·ГҐ В«Г­ГҐГІВ»\n3) ГЏГ°ГҐГ®ГЎГ°Г Г§Г®ГўГ Г­ГЁГҐ Г¶ГҐГ«Г®ГЈГ® Гў Г¤Г°Г®ГЎГ­Г®ГҐ\n4) ГЏГ°ГҐГ®ГЎГ°Г Г§Г®ГўГ Г­ГЁГҐ Г¤Г°Г®ГЎГ­Г®ГЈГ® Гў Г¶ГҐГ«Г®ГҐ (ГҐГ±Г«ГЁ Г§Г­Г Г¬ГҐГ­Г ГІГҐГ«Гј Г°Г ГўГҐГ­ 1)\n5) Г‘Г«Г®Г¦ГҐГ­ГЁГҐ Г¤Г°Г®ГЎГҐГ©\n6) Г‚Г»Г·ГЁГІГ Г­ГЁГҐ Г¤Г°Г®ГЎГҐГ©\n7) Г“Г¬Г­Г®Г¦ГҐГ­ГЁГҐ Г¤Г°Г®ГЎГҐГ©\n8) Г„ГҐГ«ГҐГ­ГЁГҐ Г¤Г°Г®ГЎГҐГ© (Г¤ГҐГ«ГЁГІГҐГ«Гј Г®ГІГ«ГЁГ·ГҐГ­ Г®ГІ Г­ГіГ«Гї)\n");
 		int x, n; char c;
 		struct rational_number A, B, res;
 		struct integer_number Z;
@@ -176,11 +194,12 @@ int rational()
 			free_Q(A);
 			break;
 		case 2:
+			A = RED_Q_Q(A);
 			printf("%d\n", INT_Q_B(A));
 			free_Q(A);
 			break;
 		case 3:
-			printf("введите n\n");
+			printf("ГўГўГҐГ¤ГЁГІГҐ n\n");
 			if (scanf("%d%c", &n, &c) == EOF) return -1;
 			Z = read_Z(n);
 			A = TRANS_Z_Q(Z);

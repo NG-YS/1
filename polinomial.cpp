@@ -2,31 +2,31 @@
 #include "rational.h"
 #include "integer.h"
 #include "polinomial.h"
-//P.k=-1 при ошибке
+//P.k=-1 ГЇГ°ГЁ Г®ГёГЁГЎГЄГҐ
 polinom read_PP()
 {
 	polinom P;
-	printf("Введите степень полинома\n");
-	if (scanf("%d", &(P.k)) == EOF) { printf("ошибка в read_PP"); P.k = -1; return P; }
+	printf("Г‚ГўГҐГ¤ГЁГІГҐ Г±ГІГҐГЇГҐГ­Гј ГЇГ®Г«ГЁГ­Г®Г¬Г \n");
+	if (scanf("%d", &(P.k)) == EOF) { printf("Г®ГёГЁГЎГЄГ  Гў read_PP"); P.k = -1; return P; }
 	P.mas = new rational_number[P.k + 3];
 	if (P.mas == NULL) { printf(""); P.k = -1; return P; }
-	printf("Введите коэффициенты полинома. Не забывайте, что ноль - тоже коэффициент.\n");
+	printf("Г‚ГўГҐГ¤ГЁГІГҐ ГЄГ®ГЅГґГґГЁГ¶ГЁГҐГ­ГІГ» ГЇГ®Г«ГЁГ­Г®Г¬Г . ГЌГҐ Г§Г ГЎГ»ГўГ Г©ГІГҐ, Г·ГІГ® Г­Г®Г«Гј - ГІГ®Г¦ГҐ ГЄГ®ГЅГґГґГЁГ¶ГЁГҐГ­ГІ.\n");
 	for (int i = P.k; i >= 0; i--)
 		P.mas[i] = read_QQ();
 	return P;
 }
-//-1 при ошибке(!)
+//-1 ГЇГ°ГЁ Г®ГёГЁГЎГЄГҐ(!)
 int free_P(polinom P)
 {
 	rational_number* Q, q;
 	for (int i = P.k; i >= 0; i--)
 	{
 		q = P.mas[i];
-		if (free_Q(q) == -1) { printf("ошибка в free_P"); return -1; }
+		if (free_Q(q) == -1) { printf("Г®ГёГЁГЎГЄГ  Гў free_P"); return -1; }
 	}
 	Q = P.mas;
 	//check
-	if (Q == NULL) { printf("пустой указатель в free_P"); return -1; }
+	if (Q == NULL) { printf("ГЇГіГ±ГІГ®Г© ГіГЄГ Г§Г ГІГҐГ«Гј Гў free_P"); return -1; }
 	//
 	delete[] Q;
 	Q = NULL;
@@ -120,7 +120,7 @@ int DEG_P_N(polinom P)//6
 {
 	return P.k;
 }
-//P.k==-1 в случае ошибки
+//P.k==-1 Гў Г±Г«ГіГ·Г ГҐ Г®ГёГЁГЎГЄГЁ
 polinom FAC_P_Q(polinom P)//7
 {
 	polinom P1;
@@ -128,10 +128,10 @@ polinom FAC_P_Q(polinom P)//7
 	int NokM, NodN, x, i, MAXSIZE_P = P.k + 3;
 	uint8_t* Ch, * Zn, * Nok, * Nod, * temp, * ultratemp;
 	P1.mas = new rational_number[MAXSIZE_P];
-	if (P.mas == NULL) { printf("пустой указатель в FAC_P_Q"); P.k = -1; return P; }//check
+	if (P.mas == NULL) { printf("ГЇГіГ±ГІГ®Г© ГіГЄГ Г§Г ГІГҐГ«Гј Гў FAC_P_Q"); P.k = -1; return P; }//check
 	Nok = new uint8_t[P.mas[0].m];
 	Nod = new uint8_t[P.mas[0].n];
-	if (Nod == NULL || Nok == NULL) { printf("пустой указатель в FAC_P_Q"); P.k = -1; return P; }//check
+	if (Nod == NULL || Nok == NULL) { printf("ГЇГіГ±ГІГ®Г© ГіГЄГ Г§Г ГІГҐГ«Гј Гў FAC_P_Q"); P.k = -1; return P; }//check
 	NokM = P.mas[0].m;
 	NodN = P.mas[0].n;
 	if (numbcpy(Nok, P.mas[0].zn, P.mas[0].m)) { printf("numbcpy in FAC_P_Q"); P.k = -1; return P; }
@@ -140,7 +140,7 @@ polinom FAC_P_Q(polinom P)//7
 	{
 		Zn = new uint8_t[P.mas[i].m + 1];
 		Ch = new uint8_t[P.mas[i].n + 1];
-		if (Zn == NULL || Ch == NULL) { printf("пустой указатель в FAC_P_Q"); P.k = -1; return P; }//check
+		if (Zn == NULL || Ch == NULL) { printf("ГЇГіГ±ГІГ®Г© ГіГЄГ Г§Г ГІГҐГ«Гј Гў FAC_P_Q"); P.k = -1; return P; }//check
 		if (numbcpy(Zn, P.mas[i].zn, P.mas[i].m)) { printf("numbcpy in FAC_P_Q"); P.k = -1; return P; }//check
 		if (numbcpy(Ch, P.mas[i].ch, P.mas[i].n)) { printf("numbcpy in FAC_P_Q"); P.k = -1; return P; }//check
 		x = P.mas[i].n;
@@ -156,11 +156,11 @@ polinom FAC_P_Q(polinom P)//7
 	{
 		ultratemp = MUL_NN_N(P.mas[i].ch, Nok, P.mas[i].n, NokM, &x);
 		if (ultratemp != NULL && i < MAXSIZE_P) P1.mas[i].ch = ultratemp;
-		else { printf("пустой указатель в FAC_P_Q"); P.k = -1; return P; }
+		else { printf("ГЇГіГ±ГІГ®Г© ГіГЄГ Г§Г ГІГҐГ«Гј Гў FAC_P_Q"); P.k = -1; return P; }
 		P1.mas[i].n = x;
 		ultratemp = MUL_NN_N(P.mas[i].zn, Nod, P.mas[i].m, NodN, &x);
 		if (ultratemp != NULL) P1.mas[i].zn = ultratemp;
-		else { printf("пустой указатель в FAC_P_Q"); P.k = -1; return P; }
+		else { printf("ГЇГіГ±ГІГ®Г© ГіГЄГ Г§Г ГІГҐГ«Гј Гў FAC_P_Q"); P.k = -1; return P; }
 		P1.mas[i].m = x;
 		P1.mas[i].sign = P.mas[i].sign;
 		P1.mas[i] = RED_Q_Q(P1.mas[i]);
@@ -175,7 +175,7 @@ polinom MUL_PP_P(polinom P1, polinom P2)//8
 	P.k = P1.k + P2.k;
 	P.mas = new rational_number[P.k + 3];
 	//check
-	if (P.mas == NULL) { printf("пустой указатель в MUL_P_P"); P.k = -1; return P; }
+	if (P.mas == NULL) { printf("ГЇГіГ±ГІГ®Г© ГіГЄГ Г§Г ГІГҐГ«Гј Гў MUL_P_P"); P.k = -1; return P; }
 	//
 	for (i = P.k; i >= 0; i--) 
 	{ 
@@ -183,7 +183,7 @@ polinom MUL_PP_P(polinom P1, polinom P2)//8
 		P.mas[i].n = 1;
 		P.mas[i].ch = new uint8_t[3];
 		P.mas[i].zn = new uint8_t[3];
-		if (P.mas[i].ch == NULL || P.mas[i].zn == NULL) { printf("пустой указатель в MUL_P_P"); P.k = -1; return P; }//check
+		if (P.mas[i].ch == NULL || P.mas[i].zn == NULL) { printf("ГЇГіГ±ГІГ®Г© ГіГЄГ Г§Г ГІГҐГ«Гј Гў MUL_P_P"); P.k = -1; return P; }//check
 		P.mas[i].ch[0] = 0;
 		P.mas[i].zn[0] = 1;
 		P.mas[i].sign = 0;
@@ -199,9 +199,9 @@ polinom MUL_PP_P(polinom P1, polinom P2)//8
 		}
 	return P;
 }
-//P.k=-1 в случае ошибки
+//P.k=-1 Гў Г±Г«ГіГ·Г ГҐ Г®ГёГЁГЎГЄГЁ
 polinom DIV_PP_P(polinom P1, polinom P2)//9
-{//портит исходные данные
+{//ГЇГ®Г°ГІГЁГІ ГЁГ±ГµГ®Г¤Г­Г»ГҐ Г¤Г Г­Г­Г»ГҐ
 	polinom P; int i, j, x; rational_number Q, Q1;
 	if (P1.k == -1 || P2.k == -1) { printf("error in DIV_P_P"); P.k = -1; return P; }//check
 	if (P1.mas == NULL || P2.mas == NULL) { printf("error in DIV_P_P"); P.k = -1; return P; }//check
@@ -261,9 +261,22 @@ polinom GCF_PP_P(polinom P1, polinom P2)
 	}
 	return P;
 }
+polinom DER_P_P(polinom P1)
+{
+	polinom P; int i; rational_number Q;
+	P.k = P1.k - 1;
+	P.mas = new rational_number[P1.k+1];
+	for (i = P1.k; i > 0; i--)
+	{
+		Q = TRANS_int_Q(i);
+		P.mas[i - 1] = MUL_QQ_Q(Q, P1.mas[i]);
+		free_Q(Q);
+	}
+	return P;
+}
 int polinomial()
 {
-	printf("введите номер действия согласно инструкции в документации\n1) Сложение многочленов\n2) Вычитание многочленов\n3) Умножение многочлена на рациональное число\n4) Умножение многочлена на x^k\n5) Старший коэффициент многочлена\n6) Степень многочлена\n7)Вынесение из многочлена НОК знаменателей коэффициентов и НОД числителей\n8)\n9)\n10)\n11)\n12)\n13\n");
+	printf("ГўГўГҐГ¤ГЁГІГҐ Г­Г®Г¬ГҐГ° Г¤ГҐГ©Г±ГІГўГЁГї Г±Г®ГЈГ«Г Г±Г­Г® ГЁГ­Г±ГІГ°ГіГЄГ¶ГЁГЁ Гў Г¤Г®ГЄГіГ¬ГҐГ­ГІГ Г¶ГЁГЁ\n1) Г‘Г«Г®Г¦ГҐГ­ГЁГҐ Г¬Г­Г®ГЈГ®Г·Г«ГҐГ­Г®Гў\n2) Г‚Г»Г·ГЁГІГ Г­ГЁГҐ Г¬Г­Г®ГЈГ®Г·Г«ГҐГ­Г®Гў\n3) Г“Г¬Г­Г®Г¦ГҐГ­ГЁГҐ Г¬Г­Г®ГЈГ®Г·Г«ГҐГ­Г  Г­Г  Г°Г Г¶ГЁГ®Г­Г Г«ГјГ­Г®ГҐ Г·ГЁГ±Г«Г®\n4) Г“Г¬Г­Г®Г¦ГҐГ­ГЁГҐ Г¬Г­Г®ГЈГ®Г·Г«ГҐГ­Г  Г­Г  x^k\n5) Г‘ГІГ Г°ГёГЁГ© ГЄГ®ГЅГґГґГЁГ¶ГЁГҐГ­ГІ Г¬Г­Г®ГЈГ®Г·Г«ГҐГ­Г \n6) Г‘ГІГҐГЇГҐГ­Гј Г¬Г­Г®ГЈГ®Г·Г«ГҐГ­Г \n7)Г‚Г»Г­ГҐГ±ГҐГ­ГЁГҐ ГЁГ§ Г¬Г­Г®ГЈГ®Г·Г«ГҐГ­Г  ГЌГЋГЉ Г§Г­Г Г¬ГҐГ­Г ГІГҐГ«ГҐГ© ГЄГ®ГЅГґГґГЁГ¶ГЁГҐГ­ГІГ®Гў ГЁ ГЌГЋГ„ Г·ГЁГ±Г«ГЁГІГҐГ«ГҐГ©\n8)\n9)\n10)\n11)\n12)\n13\n");
 	int x, k; char c;
 	struct polinom A, B, res;
 	struct rational_number Q;
@@ -297,7 +310,7 @@ int polinomial()
 			free_P(res);
 			break;
 		case 4:
-			printf("введите k\n");
+			printf("ГўГўГҐГ¤ГЁГІГҐ k\n");
 			if (scanf("%d%c", &k, &c) == EOF) return -1;
 			res = MUL_Pxk_P(A, k);
 			print_PP(res);

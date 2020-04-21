@@ -94,10 +94,12 @@ uint8_t* ADD_1N_N(uint8_t* A, int* n)
 uint8_t* ADD_NN_N(uint8_t* A, uint8_t* B, int n, int m, int* p)// в p лежит длинна итогового массива
 {
 	if ((A == NULL) || (B == NULL)) { printf("пустой указатель в ADD_NN_N\n"); return NULL; }//check
-	uint8_t* temp; int tempint, i, x, MAX_temp, MAXSIZE_A = int(_msize(A)), MAXSIZE_B = int(_msize(B)), COM = COM_NN_D(A, B, n, m);
-	if (n > MAXSIZE_A || m > MAXSIZE_B || n <= 0 || m <= 0) { printf("Maxsize error в ADD_NN_N\n"); return NULL; }//check
+	uint8_t* temp; int tempint, i, x, MAX_temp, MAXSIZE_A, MAXSIZE_B, COM = COM_NN_D(A, B, n, m);
 	if (COM == -1) { printf("error in ADD_NN_N\n"); return NULL; }//check
 	if (COM == 1) { temp = A; A = B; B = temp; x = n; n = m; m = x; }
+	MAXSIZE_A = int(_msize(A));
+	MAXSIZE_B = int(_msize(B));
+	if (n > MAXSIZE_A || m > MAXSIZE_B || n <= 0 || m <= 0) { printf("Maxsize error в ADD_NN_N\n"); return NULL; }//check
 	x = 0;
 	MAX_temp = n + 2;
 	temp = new uint8_t[MAX_temp];
@@ -256,13 +258,15 @@ uint8_t* SUB_NDN_N(uint8_t* A, uint8_t* B, int n, int m, int k, int* p)//9//ве
 int DIV_NN_Dk(uint8_t* A, uint8_t* B, int n, int m, int* k)//10
 {
 	if (A == NULL || B == NULL) { printf("пустой указатель в DIV_NN_Dk\n"); return -1; }//check
-	int x, COM, MAXSIZE_temp1, MAXSIZE_temp, res = 1, q = 1, MAXSIZE_A = int(_msize(A)), MAXSIZE_B = int(_msize(B)); uint8_t* temp, * temp1;//check
-	if (n > MAXSIZE_A || m > MAXSIZE_B || n <= 0 || m <= 0) { printf("Maxsize error в DIV_NN_Dk\n"); return -1; }//check
+	int x, COM, MAXSIZE_temp1, MAXSIZE_temp, res = 1, q = 1, MAXSIZE_A, MAXSIZE_B; uint8_t* temp, * temp1;//check
 	*k = 0;
 	COM = COM_NN_D(A, B, n, m);
 	if (COM == -1) { printf("error в DIV_NN_Dk\n"); return -1; }//check
 	if (COM == 1) { temp = A; A = B; B = temp; x = n; n = m; m = x; }
 	else if (COM == 0) return 1;
+	MAXSIZE_A = int(_msize(A));
+	MAXSIZE_B = int(_msize(B));
+	if (n > MAXSIZE_A || m > MAXSIZE_B || n <= 0 || m <= 0) { printf("Maxsize error в DIV_NN_Dk\n"); return -1; }//check
 	x = n - m - 1;
 	if (n == m) x = 0;
 	*k = x;
@@ -304,10 +308,10 @@ uint8_t* DIV_NN_N(uint8_t* A, uint8_t* B, int n, int m, int* p)
 {
 	uint8_t i, * temp, * temp1, * temp2; int MAXSIZE_temp, MAXSIZE_temp1, t1, t2, q, x, k, COM = COM_NN_D(A, B, n, m);
 	if (A == NULL || B == NULL) { printf("пустой указатель в DIV_NN_N\n"); return NULL; }//check
-	int MAXSIZE_A = int(_msize(A)), MAXSIZE_B = int(_msize(B));//check
-	if (n > MAXSIZE_A || m > MAXSIZE_B || n <= 0 || m <= 0) { printf("Maxsize error в DIV_NN_N\n"); return NULL; }//check
 	if (COM == -1) { printf("error в DIV_NN_N\n"); return NULL; }//check
 	if (COM == 1) { temp = A; A = B; B = temp; x = n; n = m; m = x; }
+	int MAXSIZE_A = int(_msize(A)), MAXSIZE_B = int(_msize(B));//check
+	if (n > MAXSIZE_A || m > MAXSIZE_B || n <= 0 || m <= 0) { printf("Maxsize error в DIV_NN_N\n"); return NULL; }//check
 	MAXSIZE_temp = n - m + 2;
 	temp = new uint8_t[MAXSIZE_temp];
 	if (temp == NULL) { printf("пустой указатель в DIV_NN_N\n"); return NULL; }//check
@@ -350,11 +354,11 @@ uint8_t* MOD_NN_N(uint8_t** AA, uint8_t** BB, int n, int m, int* p)
 	if (AA == NULL || BB == NULL) { printf("пустой указатель в MOD_NN_N\n"); return NULL; }//check
 	uint8_t* temp1, * temp2, * B = *BB, * A = *AA; int MAXSIZE_x, t1, t2, x, k, MAXSIZE_A, MAXSIZE_B, COM;
 	if (A == NULL || B == NULL) { printf("пустой указатель в MOD_NN_N\n"); return NULL; }//check
-	MAXSIZE_A = int(_msize(A)), MAXSIZE_B = int(_msize(B));//check
-	if (n > MAXSIZE_A || m > MAXSIZE_B || n <= 0 || m <= 0) { printf("Maxsize error в MOD_NN_N\n"); return NULL; }//check
 	COM = COM_NN_D(A, B, n, m);//check
 	if (COM == -1) { printf("COM error в MOD_NN_N\n"); return NULL; }//check
 	if (COM == 1) { temp1 = A; A = B; B = temp1; x = n; n = m; m = x; }
+	MAXSIZE_A = int(_msize(A)), MAXSIZE_B = int(_msize(B));//check
+	if (n > MAXSIZE_A || m > MAXSIZE_B || n <= 0 || m <= 0) { printf("Maxsize error в MOD_NN_N\n"); return NULL; }//check
 	while (COM_NN_D(A, B, n, m) != 1)
 	{
 		x = DIV_NN_Dk(A, B, n, m, &k);
@@ -408,10 +412,11 @@ uint8_t* GCF_NN_N(uint8_t** AA, uint8_t** BB, int* n, int* m, int* p)
 uint8_t* LCM_NN_N(uint8_t** AA, uint8_t** BB, int n, int m, int* p)
 {
 	if (AA == NULL || BB == NULL || *BB == NULL || *AA == NULL) { printf("Pointer error в LCM_NN_N"); return NULL; }//check
-	int x, t1, t2, m_temp, MAXSIZE_B_temp, MAXSIZE_temp, MAXSIZE_A = int(_msize(*AA)), MAXSIZE_B = int(_msize(*BB)), COM = COM_NN_D(*AA, *BB, n, m); uint8_t* temp, * B_temp, * temp1;
-	if (n > MAXSIZE_A || m > MAXSIZE_B || n <= 0 || m <= 0) { printf("Maxsize error в LCM_NN_N"); return NULL; }//check
+	int x, t1, t2, m_temp, MAXSIZE_B_temp, MAXSIZE_temp, MAXSIZE_A, MAXSIZE_B, COM = COM_NN_D(*AA, *BB, n, m); uint8_t* temp, * B_temp, * temp1;
 	if (COM == -1) { printf("COM error в LCM_NN_N"); return NULL; }//check
 	if (COM == 1) { temp = *AA; *AA = *BB; *BB = temp; x = n; n = m; m = x; }
+	MAXSIZE_A = int(_msize(*AA)); MAXSIZE_B = int(_msize(*BB));
+	if (n > MAXSIZE_A || m > MAXSIZE_B || n <= 0 || m <= 0) { printf("Maxsize error в LCM_NN_N"); return NULL; }//check
 	MAXSIZE_temp = n + 1; t1 = n;
 	temp = new uint8_t[MAXSIZE_temp];
 	if (temp == NULL) { printf("Pointer error в LCM_NN_N"); return NULL; }//check
